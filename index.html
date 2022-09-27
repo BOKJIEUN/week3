@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+
+	<title>Christmas Timer</title>
+
+	<style type="text/css">
+		body, h1{margin: 0; margin-top: 30px;}
+		body{ width: auto; height: auto;
+			text-align: center; color: Tomato;
+			font-family: 'Pacifico', cursive; font-size: 70px;
+			background: url("background.webp");
+			}
+		h1{color: Seagreen;
+		}
+		#timer div {display: inline-block;
+					color: white; font-size: 50px;
+   					min-width: 90px;
+    				padding: 15px; margin: 15px;
+    				background: Tomato; border-radius: 10px;
+    			}
+    	#timer div span {color: white;  font-size: 20px;
+    					display: block; margin-top: 10px; margin-bottom: 10px;
+    				}
+    	#stopbtn{display: inline-block; text-align: center; 
+    			width: 70px; color: white; font-size: 20px;
+    			padding: 8px; margin: 8px; 
+    			background: Tomato; border-radius: 30px;}
+	</style>
+</head>
+
+<body>
+	<h1>🎄Christmas CountDown🎄</h1>
+
+	<div id="timer"></div>
+	<div id="stopbtn">Stop</div>
+
+	<script type="text/javascript">
+		//함수: 특정한 일을 실행하는 코드블럭에 이름을 붙여 쉽게 실행할 수 있도록 한 것
+		//1. 시스템 내장함수
+		//2. 누군가 만든 함수(링크 src로 가능)
+		//3. 내가 프로그래밍한 함수
+
+		todayBox();
+		function todayBox(){
+			var newDiv = document.createElement('div');
+			newDiv.append(makeDate);
+		
+			makeDate();
+			function makeDate(){
+				var d = new Date();
+				var year = d.getFullYear();
+				var month = d.getMonth() + 1;
+				var day = d.getDay();
+				var date = d.getDate();
+				var output = "<br>" + "Today is " + trans(day) + ", " + month + "/" + date + ", " + year + "<br>" ;
+				document.write(output);
+			}
+		}
+		
+//함수의 인자(argument): '인자'를 받아서 함수의(입력값)에 저장한다는 뜻(별도로 변수를 정의할 필요 X)
+		function trans(num){
+			var num2;
+			if(num == "1"){num2 = "Mon"}
+			else if(num == "2"){num2 = "Tue"}
+			else if(num == "3"){num2 = "Wed"}
+			else if(num == "4"){num2 = "Thu"}
+			else if(num == "5"){num2 = "Fri"}
+			else if(num == "6"){num2 = "Sat"}
+			else if(num == "0"){num2 = "Sun"}
+			return num2;
+		}
+
+
+		CountdownBox();
+		function CountdownBox(){
+			var newDiv = document.createElement('div');
+			newDiv.append(ddayCount);
+
+			ddayCount();
+			function ddayCount(){
+				var today = new Date();
+				var theDate = new Date(2022, 11, 25);
+				var dday = theDate.getTime() - today.getTime();
+				var outputC = Math.ceil(dday / (24 * 60 * 60 * 1000)) + " Days Until Christmas!🎅🏻";
+				document.write(outputC);
+			}
+		}
+
+		updateTimer();
+		function updateTimer(){
+
+			var future = Date.parse("dec 25, 2022 00:00:00");
+			var now = new Date();
+			var christmas = future - now;
+
+			var days = Math.floor(christmas / (1000 * 60 * 60 * 24));
+ 			var hours = Math.floor(christmas / (1000 * 60 * 60));
+	 		var mins = Math.floor(christmas / (1000 * 60));
+			var secs = Math.floor(christmas / 1000);
+
+			var d = days;
+ 			var h = hours - days * 24;
+ 			var m = mins - hours * 60;
+ 			var s = secs - mins * 60;
+
+ 			document.getElementById("timer").innerHTML =
+ 				'<div>' + d + '<span>Days</span></div>' +
+  				'<div>' + h + '<span>Hours</span></div>' +
+  				'<div>' + m + '<span>Minutes</span></div>' +
+ 				'<div>' + s + '<span>Seconds</span></div>';
+
+ 			setInterval('updateTimer()', 1000);
+ 		}
+ 		//???모르겠다..........
+ 		stopbtn.onclick = function(){
+ 			clearInterval('updateTimer()');
+ 		}
+
+	</script>
+
+
+</body>
+</html>
